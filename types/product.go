@@ -6,9 +6,11 @@ const minProductNameLen = 3
 
 
 type Product struct {
+	ID string `bson:"_id,omitempty" json: "id"`
 	SKU string `bson:"sku" json: "SKU"`
 	Name string `bson:"name" json: "name"`
 	Slug string `bson:"slug" json: "slug"`
+	// Slug string `bson:"slug" json: "slug.omitempty"`
 }
 
 

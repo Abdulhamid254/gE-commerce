@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Abdulhamid254/gggcommerce/api"
 	"github.com/Abdulhamid254/gggcommerce/store"
@@ -15,8 +16,14 @@ import (
 //go get github.com/anthdm/weaveboxclear
 
 
+func handleApiError(ctx *weavebox.Context, err error) {
+	fmt.Println(err)
+}
+
+
 func main(){
 	app := weavebox.New()
+	app.ErrorHandler = handleApiError
 	// box here is like a super route
 	adminRoute := app.Box("/admin")
 
