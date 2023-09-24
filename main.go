@@ -43,7 +43,7 @@ func main(){
 	if err != nil {
 		panic(err)
 	}
-	
+
 // client,err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
 //    if err != nil {
 // 	log.Fatal(err)
@@ -63,6 +63,7 @@ func main(){
 
 	// app.Get("/product", func(*weavebox.Context) error {return nil})
 		adminRoute.Get("/product/:id", productHandler.HandleGetProductById)
+		adminRoute.Get("/product", productHandler.HandleGetProducts)
 		adminRoute.Post("/product", productHandler.HandlePostProduct)
 
 	app.Serve(3001)

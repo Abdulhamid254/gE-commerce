@@ -39,6 +39,8 @@ func NewProductFromRequest(req *CreateProductRequest) (*Product, error) {
 	}, nil
 }
 
+
+// veryfyingthe payload
 func validateCreateProductRequest(req *CreateProductRequest) error {
 	if len(req.SKU) < 3 {
 		return fmt.Errorf("the SKU of the product is to short")
