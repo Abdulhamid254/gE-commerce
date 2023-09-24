@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"net/http"
+
 	"github.com/Abdulhamid254/gggcommerce/api"
 	"github.com/Abdulhamid254/gggcommerce/store"
 	"github.com/anthdm/weavebox"
@@ -15,29 +17,48 @@ import (
 //weavebox is like a framework
 //go get github.com/anthdm/weaveboxclear
 
+//custom error
 
-func handleApiError(ctx *weavebox.Context, err error) {
-	fmt.Println(err)
+func handleAPIError(ctx *weavebox.Context, err error) {
+	fmt.Println("API error:", err)
+	ctx.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 }
 
 
 func main(){
 	app := weavebox.New()
-	app.ErrorHandler = handleApiError
+	app.ErrorHandler = handleAPIError
 	// box here is like a super route
 	adminRoute := app.Box("/admin")
 
 
 
+// client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
+// 	if err != nil {
+// 		fmt.Printf("%T %+v", err, err)
+// 		panic(err)
+// 	}
+
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
-    if err != nil {
-	    panic(err)
-      }
+	if err != nil {
+		panic(err)
+	}
+	
+// client,err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
+//    if err != nil {
+// 	log.Fatal(err)
+//    }
+//    ctx := context.Background()
+//    err = client.Connect(ctx)
+//    if err != nil {
+// 	log.Fatal(err)
+//    }
+//    defer client.Disconnect(ctx)
 
 	// productHandler := &api.ProductHandler{}
 
 	
-	productStore := store.NewMongoProductStore(client.Database(("gggcommerce")))
+	productStore := store.NewMongoProductStore(client.Database("gggcommerce"))
 	productHandler := api.NewProductHandler(productStore)
 
 	// app.Get("/product", func(*weavebox.Context) error {return nil})

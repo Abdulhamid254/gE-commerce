@@ -13,15 +13,16 @@ import (
 
 
 type MongoProductStore struct {
-	db  *mongo.Database
+	db   *mongo.Database
 	coll string
 }
+
 // ​Btw, when a function uses a context, the function that uses the context should also have it in the function arguments. This way you can easily chain them.
 
 
-func NewMongoProductStore(db *mongo.Database) *MongoProductStore{
+func NewMongoProductStore(db *mongo.Database) *MongoProductStore {
 	return &MongoProductStore{
-		db: db,
+		db:   db,
 		coll: "products",
 	}
 }
@@ -42,12 +43,12 @@ func (s *MongoProductStore) Insert(ctx context.Context, p *types.Product) error 
 	return err
 }
 
-func (s *MongoProductStore) GetById(ctx context.Context, id string) (*types.Product,error) {
-	var ( 
-	   objID, _ = primitive.ObjectIDFromHex(id)
-	   res = s.db.Collection(s.coll).FindOne(ctx, bson.M{"_id": objID})
-	   p = &types.Product{}
-	   err = res.Decode(p)
+func (s *MongoProductStore) GetById(ctx context.Context, id string) (*types.Product, error) {
+	var (
+		objID, _ = primitive.ObjectIDFromHex(id)
+		res      = s.db.Collection(s.coll).FindOne(ctx, bson.M{"_id": objID})
+		p        = &types.Product{}
+		err      = res.Decode(p)
 	)
-	return p,err
-} 
+	return p, err
+}
