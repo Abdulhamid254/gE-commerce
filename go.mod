@@ -6,6 +6,7 @@ require (
 	github.com/anthdm/weavebox v0.9.7 // indirect
 	github.com/bradfitz/http2 v0.0.0-20160116213329-aa7658c0e990 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect

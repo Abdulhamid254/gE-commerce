@@ -29,7 +29,10 @@ func main(){
 	app := weavebox.New()
 	app.ErrorHandler = handleAPIError
 	// box here is like a super route
+   // protecting the adminRoute wwith middleware
+	adminMW := &api.AdminAuthMiddleware{}
 	adminRoute := app.Box("/admin")
+    adminRoute.Use(adminMW.Authenticate)
 
 
 
@@ -62,9 +65,11 @@ func main(){
 	productHandler := api.NewProductHandler(productStore)
 
 	// app.Get("/product", func(*weavebox.Context) error {return nil})
-		adminRoute.Get("/product/:id", productHandler.HandleGetProductById)
-		adminRoute.Get("/product", productHandler.HandleGetProducts)
-		adminRoute.Post("/product", productHandler.HandlePostProduct)
+	//adminproduct
+	    adminProductRoute := adminRoute.Box("/product")
+		adminProductRoute.Get("/:id", productHandler.HandleGetProductById)
+		adminProductRoute.Get("/", productHandler.HandleGetProducts)
+		adminProductRoute.Post("/", productHandler.HandlePostProduct)
 
 	app.Serve(3001)
 	
